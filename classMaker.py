@@ -6,7 +6,7 @@ import sys
 
 class SQLClassMaker():
 
-	def __init__(self,host,user,passwd):
+	def __init__(self,host,user,passwd,port):
 
 		self.cursor = None
 		
@@ -14,6 +14,8 @@ class SQLClassMaker():
 			host = 'localhost'
 		if user == '':
 			user = 'root'
+		if port == '':
+			port = 3306
 
 		try:
 
@@ -22,7 +24,8 @@ class SQLClassMaker():
 			self.connection = sql.connect(
 				host=host,
 				user=user,
-				passwd=passwd
+				passwd=passwd,
+				port=port
 				)
 
 			#Create SQL cursor
