@@ -7,7 +7,7 @@ from classMaker import SQLClassMaker
 class window(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.resize(400,200)
+        self.resize(400,300)
         self.gui()
         self.classMaker = None
     def gui(self):
@@ -26,6 +26,10 @@ class window(QMainWindow):
         self.psswdedit.setPlaceholderText("Default is empty")
         self.psswdedit.setEchoMode(QLineEdit.Password)
         self.psswdlabel = QLabel("Password:")
+
+        self.portedit = QLineEdit()
+        self.portedit.setPlaceholderText("Default is 3306")
+        self.portlabel = QLabel("Port:")
 
         self.packageedit = QLineEdit()
         self.packageedit.textChanged.connect(self.onTextChanged)
@@ -54,10 +58,13 @@ class window(QMainWindow):
         self.mainLayout.addWidget(self.psswdlabel,2,0)
         self.mainLayout.addWidget(self.psswdedit,2,1)
 
-        self.mainLayout.addWidget(self.packagelabel,3,0)
-        self.mainLayout.addWidget(self.packageedit,3,1)
+        self.mainLayout.addWidget(self.portlabel,3,0)
+        self.mainLayout.addWidget(self.portedit,3,1)
 
-        self.mainLayout.addWidget(self.nextButton,4,0,1,0)
+        self.mainLayout.addWidget(self.packagelabel,4,0)
+        self.mainLayout.addWidget(self.packageedit,4,1)
+
+        self.mainLayout.addWidget(self.nextButton,5,0,1,0)
 
         self.mainLayout.setAlignment(Qt.AlignTop)
         self.mainLayout.setContentsMargins(20,20,20,20)
@@ -69,7 +76,7 @@ class window(QMainWindow):
         self.mainFrame.resize(self.size())
     def onClickNext(self):
         self.packageName = self.packageedit.text()
-        self.classMaker = SQLClassMaker(self.hostedit.text(),self.usredit.text(),self.psswdedit.text())
+        self.classMaker = SQLClassMaker(self.hostedit.text(),self.usredit.text(),self.psswdedit.text(), self.portedit.text())
         self.mainLayout.removeWidget(self.hostlabel)
         self.hostlabel.deleteLater()
         self.mainLayout.removeWidget(self.hostedit)
@@ -81,6 +88,11 @@ class window(QMainWindow):
         self.mainLayout.removeWidget(self.psswdedit)
         self.psswdedit.deleteLater()
         self.mainLayout.removeWidget(self.psswdlabel)
+
+        self.portlabel.deleteLater()
+        self.mainLayout.removeWidget(self.portedit)
+        self.portedit.deleteLater()
+
         self.psswdlabel.deleteLater()
         self.mainLayout.removeWidget(self.packageedit)
         self.packageedit.deleteLater()
